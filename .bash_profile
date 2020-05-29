@@ -22,11 +22,14 @@
 #   Allow colors to be changed in the terminal
 #   ------------------------------------------------------------
     export CLICOLOR=1
-    # export LSCOLORS=ExFxBxDxCxegedabagacad
+
+#   Parse Git branch for Bash prompt
+#   ------------------------------------------------------------
+    parseGitBranch () { git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'; }
 
 #   Change bash prompt and multiline 
 #   ------------------------------------------------------------
-    export PS1="________________________________________________________________________________\n| \w @ \h (\u) \n| => "
+    export PS1="________________________________________________________________________________\n| \033[35m\]\w\[\033[00m\] \033[34m\]\h\[\033[00m\] \033[32m\](\u)\[\033[00m\]\033[31m\]\$(parseGitBranch)\[\033[00m\] \n| => "
     export PS2="| => "
 
 #   Set Paths
@@ -42,10 +45,10 @@
 #   ------------------------------------------------------------
     export EDITOR=/usr/bin/nano
 
-#   Set default blocksize for ls, df, du
-#   from this: http://hints.macworld.com/comment.php?mode=view&cid=24491
+#   Set display block size for ls
 #   ------------------------------------------------------------
     export BLOCKSIZE=1k
+
 
 #   -----------------------------
 #   2.  MAKE TERMINAL BETTER
@@ -56,7 +59,7 @@ alias mv='mv -iv'                           # Preferred 'mv' implementation
 alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
 alias ll='ls -FGlAhp'                       # Preferred 'ls' implementation
 alias less='less -FSRXc'                    # Preferred 'less' implementation
-cd() { builtin cd "$@"; ll; }               # Always list directory contents upon 'cd'
+# cd() { builtin cd "$@"; ll; }               # Always list directory contents upon 'cd'
 alias cd..='cd ../'                         # Go back 1 directory level (for fast typers)
 alias ..='cd ../'                           # Go back 1 directory level
 alias ...='cd ../../'                       # Go back 2 directory levels
